@@ -198,14 +198,17 @@ public class ForegroundService extends Service {
         String pkgName  = context.getPackageName();
         Intent intent   = context.getPackageManager()
                 .getLaunchIntentForPackage(pkgName);
-
+        
         Notification.Builder notification = new Notification.Builder(context)
-                .setContentTitle(title)
-                .setContentText(text)
                 .setOngoing(true)
                 .setVibrate(null)
-                .setSmallIcon(getIconResId(settings));
-
+                .setSmallIcon(getIconResId(settings))
+                .setCategory(NotificationCompat.CATEGORY_SERVICE);
+     
+        if(title != ""){
+            notification.setContentTitle(title);
+        }
+     
         //upgrade to sdk 26, fix problems with android 8.1
         if (android.os.Build.VERSION.SDK_INT >= 26) {
             notification.setChannelId(CHANNEL_ID);
@@ -215,9 +218,12 @@ public class ForegroundService extends Service {
             notification.setPriority(Notification.PRIORITY_MIN);
         }
 
-        if (bigText || text.contains("\n")) {
-            notification.setStyle(
-                    new Notification.BigTextStyle().bigText(text));
+        if(text != ""){
+            notification.setContentText(text);
+            if (bigText || text.contains("\n")) {
+                notification.setStyle(
+                        new Notification.BigTextStyle().bigText(text));
+            }
         }
 
         setColor(notification, settings);
