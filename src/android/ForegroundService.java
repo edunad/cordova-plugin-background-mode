@@ -39,7 +39,7 @@ import android.app.NotificationChannel;
 import org.json.JSONObject;
 
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
-import android.graphics.Color;
+
 /**
  * Puts the service in a foreground state, where the system considers it to be
  * something the user is actively aware of and thus not a candidate for killing
