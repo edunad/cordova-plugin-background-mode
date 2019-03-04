@@ -173,21 +173,23 @@ public class ForegroundService extends Service {
     {
         // use channelid for Oreo and higher
         String CHANNEL_ID = "cordova-plugin-background-mode-id";
+     
         if(Build.VERSION.SDK_INT >= 26){
-        // The user-visible name of the channel.
-        CharSequence name = "cordova-plugin-background-mode";
-        // The user-visible description of the channel.
-        String description = "cordova-plugin-background-moden notification";
+           // The user-visible name of the channel.
+           CharSequence name = "cordova-plugin-background-mode";
+           // The user-visible description of the channel.
+           String description = "cordova-plugin-background-moden notification";
 
-        int importance = NotificationManager.IMPORTANCE_LOW;
+           int importance = NotificationManager.IMPORTANCE_LOW;
 
-        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name,importance);
+           NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name,importance);
 
-        // Configure the notification channel.
-        mChannel.setDescription(description);
+           // Configure the notification channel.
+           mChannel.setDescription(description);
 
-        getNotificationManager().createNotificationChannel(mChannel);
+           getNotificationManager().createNotificationChannel(mChannel);
         }
+     
         String title    = settings.optString("title", NOTIFICATION_TITLE);
         String text     = settings.optString("text", NOTIFICATION_TEXT);
         boolean bigText = settings.optBoolean("bigText", false);
@@ -205,21 +207,7 @@ public class ForegroundService extends Service {
 
         //upgrade to sdk 26, fix problems with android 8.1
         if (android.os.Build.VERSION.SDK_INT >= 26) {
-          //Set the channel’s ID//
-           String CHANNEL_ONE_ID = "com.yourapp.ONE";
-           //Set the channel’s user-visible name//
-           String CHANNEL_ONE_NAME = "Channel One";
-             //This only needs to be run on Devices on Android O and above
-             NotificationManager notificationManager =
-                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ONE_ID, CHANNEL_ONE_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-             mChannel.enableLights(true);
-             mChannel.setLightColor(Color.MAGENTA);
-         
-             if (notificationManager != null) {
-                 notificationManager.createNotificationChannel(mChannel);
-             }
-             notification.setChannelId(CHANNEL_ONE_ID);
+            notification.setChannelId(this.CHANNEL_ID);
         }
 
         if (settings.optBoolean("hidden", true)) {
