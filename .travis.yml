@@ -42,7 +42,6 @@ install:
 - npm install -g cordova
 - brew install gradle
 - brew cask install android-sdk
-- ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk -a -u -t "tools,platform-tools,build-tools-25.0.2,android-25,extra-android-m2repository"
 
 before_script:
 - cordova create myApp org.apache.cordova.myApp myApp
