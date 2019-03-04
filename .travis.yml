@@ -37,9 +37,6 @@ notifications:
 matrix:
   fast_finish: true
 
-before_install:
-- xcrun simctl delete 79C525D3-2383-4201-AC3A-81810F9F4E03
-
 install:
 - npm install
 - npm install -g cordova
