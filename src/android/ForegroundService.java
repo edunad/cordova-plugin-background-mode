@@ -207,7 +207,7 @@ public class ForegroundService extends Service {
 
         //upgrade to sdk 26, fix problems with android 8.1
         if (android.os.Build.VERSION.SDK_INT >= 26) {
-            notification.setChannelId(this.CHANNEL_ID);
+            notification.setChannelId(CHANNEL_ID);
         }
 
         if (settings.optBoolean("hidden", true)) {
