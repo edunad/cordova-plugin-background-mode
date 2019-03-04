@@ -203,7 +203,7 @@ public class ForegroundService extends Service {
                 .setOngoing(true)
                 .setVibrate(null)
                 .setSmallIcon(getIconResId(settings))
-                .setCategory(NotificationCompat.CATEGORY_SERVICE);
+                .setCategory(Notification.CATEGORY_SERVICE);
      
         if(title != ""){
             notification.setContentTitle(title);
