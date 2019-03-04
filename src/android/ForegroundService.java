@@ -203,6 +203,7 @@ public class ForegroundService extends Service {
                 .setContentTitle(title)
                 .setContentText(text)
                 .setOngoing(true)
+                .setVibrate(null)
                 .setSmallIcon(getIconResId(settings));
 
         //upgrade to sdk 26, fix problems with android 8.1
