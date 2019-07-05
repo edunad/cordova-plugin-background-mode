@@ -419,12 +419,10 @@ exports._defaults = {
     hidden:             true,
     color:              undefined,
     icon:               'icon',
+    channelID:        	'cordova-plugin-background-mode-id',
     channelName:        'cordova-plugin-background-mode',
     channelDescription: 'cordova-plugin-background-moden notification',
-    allowClose:         false,
-    closeIcon:          'power',
-    closeTitle:         'Close',
-    showWhen:           true
+    allowClose:         false
 };
 
 /**

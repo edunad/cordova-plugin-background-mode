@@ -172,17 +172,14 @@ public class ForegroundService extends Service {
     private Notification makeNotification (JSONObject settings)
     {
         // use channelid for Oreo and higher
-        String CHANNEL_ID = "cordova-plugin-background-mode-id";
+        String CHANNEL_ID = settings.optString("channelID", "cordova-plugin-background-mode-id");
      
         if(Build.VERSION.SDK_INT >= 26){
            // The user-visible name of the channel.
-           CharSequence name = "cordova-plugin-background-mode";
+           CharSequence name = settings.optString("channelName", "cordova-plugin-background-mode");
            // The user-visible description of the channel.
-           String description = "cordova-plugin-background-moden notification";
-
-           int importance = NotificationManager.IMPORTANCE_LOW;
-
-           NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name,importance);
+           String description = settings.optString("channelDescription", "cordova-plugin-background-moden notification");
+           NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_LOW);
 
            // Configure the notification channel.
            mChannel.setDescription(description);
@@ -193,6 +190,7 @@ public class ForegroundService extends Service {
         String title    = settings.optString("title", NOTIFICATION_TITLE);
         String text     = settings.optString("text", NOTIFICATION_TEXT);
         boolean bigText = settings.optBoolean("bigText", false);
+        String subText  = settings.optString("subText", "");
 
         Context context = getApplicationContext();
         String pkgName  = context.getPackageName();
@@ -204,7 +202,11 @@ public class ForegroundService extends Service {
                 .setVibrate(null)
                 .setSmallIcon(getIconResId(settings))
                 .setCategory(Notification.CATEGORY_SERVICE);
-     
+
+        if (!subText.equals("")) {
+            notification.setSubText(subText);
+        }
+
         if(title != ""){
             notification.setContentTitle(title);
         }
@@ -246,8 +248,7 @@ public class ForegroundService extends Service {
      *
      * @param settings The config settings
      */
-    protected void updateNotification (JSONObject settings)
-    {
+    protected void updateNotification (JSONObject settings) {
         boolean isSilent = settings.optBoolean("silent", false);
 
         if (isSilent) {
@@ -257,7 +258,6 @@ public class ForegroundService extends Service {
 
         Notification notification = makeNotification(settings);
         getNotificationManager().notify(NOTIFICATION_ID, notification);
-
     }
 
     /**
@@ -265,8 +265,7 @@ public class ForegroundService extends Service {
      *
      * @param settings A JSON dict containing the icon name.
      */
-    private int getIconResId (JSONObject settings)
-    {
+    private int getIconResId (JSONObject settings){
         String icon = settings.optString("icon", NOTIFICATION_ICON);
 
         int resId = getIconResId(icon, "mipmap");
@@ -307,9 +306,7 @@ public class ForegroundService extends Service {
      * @param settings A JSON dict containing the color definition (red: FF0000)
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setColor (Notification.Builder notification, JSONObject settings)
-    {
-
+    private void setColor (Notification.Builder notification, JSONObject settings){
         String hex = settings.optString("color", null);
 
         if (Build.VERSION.SDK_INT < 21 || hex == null)
